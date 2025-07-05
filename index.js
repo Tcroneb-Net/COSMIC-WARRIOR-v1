@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const bot = new TelegramBot(process.env["8189906423:AAGG_4GL4gsX8dvVAHqL3rOmQJYI0AK9LtY"], { polling: true });
+const bot = new TelegramBot(process.env["7555011480:AAFEehgJ1nEyNPpv3MrHI4222Hzn-aH_ju4"], { polling: true });
 
 const hostURL = process.env["HOST_URL"] || "https://paidplan.zone.id";
 
